@@ -18,7 +18,7 @@
             if (title && this.enabled) {
                 var $tip = this.tip();
                 
-                $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
+                $tip.find('div.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
                 
@@ -36,11 +36,13 @@
         
         position: function() {
             var $tip = this.$tip,
+            	$elem = $(this.$element[0]),
             	pos = $.extend({}, this.$element.offset(), {
-                    width: $(this.$element[0]).outerWidth(),
-                    height: $(this.$element[0]).outerHeight()
+                    width: $elem.outerWidth(),
+                    height: $elem.outerHeight()
 		        }),
-		        actualWidth = $tip[0].offsetWidth, actualHeight = $tip[0].offsetHeight,
+		        actualWidth = $tip[0].offsetWidth,
+		        actualHeight = $tip[0].offsetHeight,
 		        gravity = this.gravity(),
 		        tp;
 		    
@@ -85,9 +87,10 @@
         },
         
         fixTitle: function() {
-            var $e = this.$element;
-            if ($e.attr('title') || typeof($e.attr('original-title')) !== 'string') {
-                $e.attr('original-title', $e.attr('title') || '').removeAttr('title');
+            var $e = this.$element,
+            	title = $e.attr('title');
+            if (title || typeof($e.attr('original-title')) !== 'string') {
+                $e.attr('original-title', title || '').removeAttr('title');
             }
         },
         
@@ -105,7 +108,7 @@
         
         tip: function() {
             if (!this.$tip) {
-                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
+                this.$tip = $('<div class="tipsy"><div class="tipsy-arrow"></div><div class="tipsy-inner"></div></div>');
             }
             return this.$tip;
         },
