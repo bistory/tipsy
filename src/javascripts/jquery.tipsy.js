@@ -132,7 +132,11 @@
             return this.data('tipsy');
         } else if (typeof options === 'string') {
             var tipsy = this.data('tipsy');
-            if (tipsy) tipsy[options]();
+            if (tipsy) {
+            	tipsy[options]();
+            	if (options == 'show') $(document).bind('scroll', {tipsy:tipsy}, onDocumentScroll);
+            	else if (options == 'hide') $(document).unbind('scroll', onDocumentScroll);
+            }
             return this;
         }
         
@@ -187,6 +191,11 @@
                 eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
             this[binder](eventIn, enter)[binder](eventOut, leave);
+            
+            // Handle click on links with target="_blank"
+            if(options.trigger == 'hover') {
+            	this.click(eventOut, leave);
+            }
         }
         
         return this;
