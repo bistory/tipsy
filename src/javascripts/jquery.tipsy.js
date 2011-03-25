@@ -134,8 +134,8 @@
             var tipsy = this.data('tipsy');
             if (tipsy) {
             	tipsy[options]();
-            	if (options == 'show') $(document).bind('scroll', {tipsy:tipsy}, onDocumentScroll);
-            	else if (options == 'hide') $(document).unbind('scroll', onDocumentScroll);
+            	if (options == 'show') $(window).bind('scroll resize', {tipsy:tipsy}, onDocumentScroll);
+            	else if (options == 'hide') $(window).unbind('scroll resize', onDocumentScroll);
             }
             return this;
         }
@@ -160,12 +160,12 @@
             tipsy.hoverState = 'in';
             if (options.delayIn === 0) {
                 tipsy.show();
-                $(document).bind('scroll', {tipsy:tipsy}, onDocumentScroll);
+                $(window).bind('scroll resize', {tipsy:tipsy}, onDocumentScroll);
             } else {
                 tipsy.fixTitle();
                 setTimeout(function() {
                 	if (tipsy.hoverState == 'in') tipsy.show();
-                	$(document).bind('scroll', {tipsy:tipsy}, onDocumentScroll);
+                	$(window).bind('scroll resize', {tipsy:tipsy}, onDocumentScroll);
                 }, options.delayIn);
             }
         }
@@ -175,11 +175,11 @@
             tipsy.hoverState = 'out';
             if (options.delayOut === 0) {
                 tipsy.hide();
-                $(document).unbind('scroll', onDocumentScroll);
+                $(window).unbind('scroll resize', onDocumentScroll);
             } else {
                 setTimeout(function() {
                 	if (tipsy.hoverState == 'out') tipsy.hide();
-                	$(document).unbind('scroll', onDocumentScroll);
+                	$(window).unbind('scroll resize', onDocumentScroll);
                 }, options.delayOut);
             }
         }
