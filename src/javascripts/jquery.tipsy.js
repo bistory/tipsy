@@ -23,7 +23,7 @@
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
                 
                 this.position();
-
+                
                 $tip.addClass('tipsy-' + this.gravity());
                 
                 if (this.options.fade) {
@@ -36,16 +36,16 @@
         
         position: function() {
             var $tip = this.$tip,
-            	$elem = $(this.$element[0]),
-            	pos = $.extend({}, this.$element.offset(), {
+                $elem = $(this.$element[0]),
+                pos = $.extend({}, this.$element.offset(), {
                     width: $elem.outerWidth(),
                     height: $elem.outerHeight()
-		        }),
-		        actualWidth = $tip[0].offsetWidth,
-		        actualHeight = $tip[0].offsetHeight,
-		        gravity = this.gravity(),
-		        tp;
-		    
+                }),
+                actualWidth = $tip[0].offsetWidth,
+                actualHeight = $tip[0].offsetHeight,
+                gravity = this.gravity(),
+                tp;
+            
             switch (gravity.charAt(0)) {
                 case 'n':
                     tp = {top: pos.top + pos.height + this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
@@ -73,9 +73,7 @@
         },
 
         gravity: function() {
-            return (typeof this.options.gravity === 'function')
-                ? this.options.gravity.call(this.$element[0])
-                : this.options.gravity;
+            return (typeof this.options.gravity === 'function') ? this.options.gravity.call(this.$element[0]) : this.options.gravity;
         },
         
         hide: function() {
@@ -88,7 +86,7 @@
         
         fixTitle: function() {
             var $e = this.$element,
-            	title = $e.attr('title');
+                title = $e.attr('title');
             if (title || typeof($e.attr('original-title')) !== 'string') {
                 $e.attr('original-title', title || '').removeAttr('title');
             }
@@ -128,20 +126,6 @@
     
     $.fn.tipsy = function(options) {
         
-        if (options === true) {
-            return this.data('tipsy');
-        } else if (typeof options === 'string') {
-            var tipsy = this.data('tipsy');
-            if (tipsy) {
-            	tipsy[options]();
-            	if (options == 'show') $(window).bind('scroll resize', {tipsy:tipsy}, onDocumentScroll);
-            	else if (options == 'hide') $(window).unbind('scroll resize', onDocumentScroll);
-            }
-            return this;
-        }
-        
-        options = $.extend({}, $.fn.tipsy.defaults, options);
-        
         function onDocumentScroll(e) {
             e.data.tipsy.position();
         }
@@ -164,8 +148,8 @@
             } else {
                 tipsy.fixTitle();
                 setTimeout(function() {
-                	if (tipsy.hoverState == 'in') tipsy.show();
-                	$(window).bind('scroll resize', {tipsy:tipsy}, onDocumentScroll);
+                    if (tipsy.hoverState == 'in') tipsy.show();
+                    $(window).bind('scroll resize', {tipsy:tipsy}, onDocumentScroll);
                 }, options.delayIn);
             }
         }
@@ -178,11 +162,25 @@
                 $(window).unbind('scroll resize', onDocumentScroll);
             } else {
                 setTimeout(function() {
-                	if (tipsy.hoverState == 'out') tipsy.hide();
-                	$(window).unbind('scroll resize', onDocumentScroll);
+                    if (tipsy.hoverState == 'out') tipsy.hide();
+                    $(window).unbind('scroll resize', onDocumentScroll);
                 }, options.delayOut);
             }
         }
+        
+        if (options === true) {
+            return this.data('tipsy');
+        } else if (typeof options === 'string') {
+            var tipsy = this.data('tipsy');
+            if (tipsy) {
+                tipsy[options]();
+                if (options == 'show') $(window).bind('scroll resize', {tipsy:tipsy}, onDocumentScroll);
+                else if (options == 'hide') $(window).unbind('scroll resize', onDocumentScroll);
+            }
+            return this;
+        }
+        
+        options = $.extend({}, $.fn.tipsy.defaults, options);
         
         if (!options.live) this.each(function() { get(this); });
         
@@ -194,7 +192,7 @@
             
             // Handle click on links with target="_blank"
             if(options.trigger == 'hover') {
-            	this.click(eventOut, leave);
+                this.click(eventOut, leave);
             }
         }
         
