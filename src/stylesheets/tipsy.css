@@ -21,6 +21,7 @@
   position: absolute;
   width: 0;
   height: 0;
+  line-height: 1px;
 }
 
 .tipsy-n .tipsy-arrow,
@@ -74,4 +75,22 @@
   border-top: 5px solid transparent;
   border-right: 5px solid black;
   border-bottom: 5px solid transparent;
+}
+
+*html .tipsy-e .tipsy-arrow,
+*html .tipsy-w .tipsy-arrow {
+  border-top-color: pink;
+  border-bottom-color: pink;
+  filter: chroma(color=pink);
+}
+
+*html .tipsy-n .tipsy-arrow,
+*html .tipsy-nw .tipsy-arrow,
+*html .tipsy-ne .tipsy-arrow,
+*html .tipsy-s .tipsy-arrow,
+*html .tipsy-sw .tipsy-arrow,
+*html .tipsy-se .tipsy-arrow {
+  border-left-color: pink;
+  border-right-color: pink;
+  filter: chroma(color=pink);
 }
